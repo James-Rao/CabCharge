@@ -24,17 +24,17 @@ namespace CabCharge.Services
 
         public async Task<EmailResponse> SendEmail(EmailRequest request)
         {
-            var formRequest = new Dictionary<string, string>
+            var mgRequest = new MailGunRequest {  FormData = new Dictionary<string, string>()
             {
                 { "from", request.From },
                 { "to", request.Tos },
                 { "subject", request.Subject },
                 { "text", request.Content }
+            }
             };
 
-            var response = await _client.PostRequest<MailGunResponse>(_host, _path, _headers, formRequest);
-
-            return new EmailResponse { IsSuccessStatusCode = response.IsSuccessStatusCode, Message = response.Message };
+            var response = await _client.PostRequest<Dictionary<string, string>, MailGunResponse >(_host, _path, _headers, mgRequest.FormData);
+            return new EmailResponse { IsSuccessed = response.IsSuccessStatusCode, Reason = response.ReasonPhrase, Message = response.Message };
         }
     }
 }

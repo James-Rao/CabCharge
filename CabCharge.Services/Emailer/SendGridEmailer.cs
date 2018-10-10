@@ -37,8 +37,7 @@ namespace CabCharge.Services
             jsonObj.Content[0] = new Content { Type = "text/plain", Value = request.Content };
 
             var response = await _client.PostRequest<SendGridRequest, SendGridResponse>(_host, _path, _headers, jsonObj);
-
-            return new EmailResponse { IsSuccessStatusCode = response.IsSuccessStatusCode, Message = response.Message };
+            return new EmailResponse { IsSuccessed = response.IsSuccessStatusCode, Reason = response.ReasonPhrase, Message = response.Message };
         }
     }
 }

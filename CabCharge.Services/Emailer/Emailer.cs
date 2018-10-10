@@ -11,7 +11,7 @@ namespace CabCharge.Services
         public Emailer(IMailGunEmailer mailGun, ISendGridEmailer sendGrid)
         {
             _emailers.Add(mailGun);
-            _emailers.Add(sendGrid);
+            //_emailers.Add(sendGrid);
         }
 
         public async Task<EmailResponse> SendEmail(EmailRequest request)
@@ -22,7 +22,7 @@ namespace CabCharge.Services
                 try
                 {
                     lastResponse = await emailer.SendEmail(request);
-                    if (lastResponse.IsSuccessStatusCode)
+                    if (lastResponse.IsSuccessed)
                     {
                         return lastResponse;
                     }
